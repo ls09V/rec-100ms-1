@@ -17,7 +17,6 @@
     "build:dist:live": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=live webpack --config ./config/webpack.config.js && npm run postBuildHook",
     "analyse": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=local webpack --config ./config/webpack.config.js --profile --json > dist/build/stats.json && webpack-bundle-analyzer dist/build/stats.json",
     "generateWebp": "node ./config/webpConverter.js",
-    "resizeImages": "node ./config/imageResizer.js",
     "preImageHook": "npm run generateWebp && npm run resizeImages",
     "postBuildHook": "node ./helper.js"
   },
