@@ -34,8 +34,8 @@ const copyFiles = (fromPath, toPath) => new Promise((resolve, reject) => {
 
 const init = () => {
   const scopedPaths = [
-    `${destPath}/*`,
-    `${destPath}/.htaccess`,
+    `!${destPath}/*`,
+    `!${destPath}/.htaccess`,
     `!${destPath}/.git`,
     `!${destPath}/.gitignore`,
   ];
