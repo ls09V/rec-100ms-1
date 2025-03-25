@@ -11,7 +11,7 @@
     "start": "npm run preImageHook && cross-env NODE_ENV=development --VARIANT=local webpack-dev-server --config ./config/webpack.config.js",
     "start:dist": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=local webpack-dev-server --config ./config/webpack.config.js && http-server ./dist -o",
     "build:dist": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=local webpack --config ./config/webpack.config.js",
-    "build": "webpack",
+    "build": "npm run build:dist:live", 
     "build:dist:local": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=local webpack --config ./config/webpack.config.js",
     "build:dist:dev-live": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=dev-live webpack --config ./config/webpack.config.js",
     "build:dist:live": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=live webpack --config ./config/webpack.config.js && npm run postBuildHook",
