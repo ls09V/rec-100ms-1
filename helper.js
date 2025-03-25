@@ -5,7 +5,7 @@ const copy = require('copy');
 
 const distPath = 'dist';
 
-const destPath = 'public';
+const destPath = '../public';
 
 const exitError = () => {
   process.exit(1);
