@@ -20,7 +20,7 @@ function getQueryparams(search) {
 
 function attachClickHandler() {
   // Remove header and toolbar
-  $('[data-testid="header"], [data-testid="footer"], [data-testid="control_bar"]').remove();
+  $('[data-testid="header"], [data-testid="footer"], [data-testid="participant_video_tile"], [data-testid="control_bar"]').remove();
 
   // Remove chat, participant list, settings, and other panels
   $('[data-testid="chat"], [data-testid="participants_list"], [data-testid="settings"]').remove();
@@ -42,13 +42,15 @@ observer.observe(document.body, {
   subtree: true,
 });
 $(document).ready(() => {
+  console.log('=======================i');
   const options = {
     userName: 'beam',
     userId: 'hash',
   };
+  const codee = 'mjw-fwqq-vnf';
   ReactDOM.createRoot(document.getElementById('videoPart')).render(
-        <React.StrictMode>
-      <HMSPrebuilt roomCode={'eff-hwia-ogd'} options= {options} />
+    <React.StrictMode>
+      <HMSPrebuilt roomCode={codee} options={options}/>
     </React.StrictMode>,
   );
 });
