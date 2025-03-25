@@ -28,7 +28,7 @@ module.exports = {
   context: path.join(config.root, config.paths.src),
   entry: inputPaths,
   output: {
-    path: path.join(config.root, 'public'),
+    path: path.join(config.root),
     filename: 'build/[name].[contenthash].js',
     publicPath: '/', // Serves files relative to the domain root
   },
