@@ -26,18 +26,13 @@ const inputPaths = getIOPaths();
 const ASSET_PATH = '/';
 
 module.exports = {
-  entry: './src/javascripts/index/index.js', // ✅ Ensure this path is correct
-  output: {
-    path: `${__dirname}/dist`, // ✅ Ensure Webpack outputs to dist/
-    filename: 'bundle.js',
-  },
   context: path.join(config.root, config.paths.src),
-  // entry: inputPaths,
-  // output: {
-  //   path: path.join(config.root, config.paths.dist),
-  //   filename: 'build/[name].[contenthash].js',
-  //   publicPath: ASSET_PATH,
-  // },
+  entry: inputPaths,
+  output: {
+    path: path.join(config.root, config.paths.dist),
+    filename: 'build/[name].[contenthash].js',
+    publicPath: ASSET_PATH,
+  },
   mode: ['production', 'development'].includes(config.env) ? config.env : 'development',
   devtool: config.env === 'production' ? 'hidden-source-map' : 'eval-cheap-source-map',
   devServer: {
