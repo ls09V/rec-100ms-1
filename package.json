@@ -10,7 +10,6 @@
     "lint:styles": "stylelint \"src/**/*.css\"",
       "start": "webpack serve --mode development",
   "build": "webpack --mode production",
-// ,    "start": "npm run preImageHook && cross-env NODE_ENV=development --VARIANT=local webpack-dev-server --config ./config/webpack.config.js",
     "start:dist": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=local webpack-dev-server --config ./config/webpack.config.js && http-server ./dist -o",
     "build:dist": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=local webpack --config ./config/webpack.config.js",
     "build:dist:local": "npm run preImageHook && cross-env NODE_ENV=production --VARIANT=local webpack --config ./config/webpack.config.js",
