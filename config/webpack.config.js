@@ -26,9 +26,9 @@ const inputPaths = getIOPaths();
 const ASSET_PATH = '/';
 
 module.exports = {
-  entry: './src/javascripts/index/index.js', // ✅ Ensure this path is correct
+  entry: path.resolve(__dirname, '../src/javascripts/index/index.js'),
   output: {
-    path: `${__dirname}/dist`, // ✅ Ensure Webpack outputs to dist/
+    path: path.resolve(__dirname, '../dist'), // ✅ Ensure output is correct
     filename: 'bundle.js',
   },
   context: path.join(config.root, config.paths.src),
