@@ -1,14 +1,14 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const config = require('./site.config');
 const path = require('path');
 const fs = require('fs');
-const config = require('./site.config');
 
 // Define common loader constants
 const sourceMap = config.env !== 'production';
 
 const INCLUDE_PATTERN = /\<include src=\"(.+)\"\/?\>(?:\<\/include\>)?/gi;
-const processNestedHtml = (content, loaderContext) => (!INCLUDE_PATTERN.test(content)
-  ? content : content.replace(INCLUDE_PATTERN, (m, src) => processNestedHtml(fs.readFileSync(path.resolve(loaderContext.context, src), 'utf8'), loaderContext)));
+const processNestedHtml = (content, loaderContext) => !INCLUDE_PATTERN.test(content) ?
+  content : content.replace(INCLUDE_PATTERN, (m, src) => processNestedHtml(fs.readFileSync(path.resolve(loaderContext.context, src), 'utf8'), loaderContext));
 
 // HTML loaders
 const html = {
@@ -43,7 +43,7 @@ const js = {
 
 // Style loaders
 const styleLoader = {
-  loader: 'style-loader',
+  loader: 'style-loader'
 };
 
 const cssLoader = {
@@ -161,6 +161,7 @@ const videos = {
     },
   ],
 };
+
 
 module.exports = [
   html,
