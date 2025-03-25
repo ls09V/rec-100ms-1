@@ -24,13 +24,13 @@ const getIOPaths = () => {
 const inputPaths = getIOPaths();
 
 const ASSET_PATH = '/';
-
 module.exports = {
   context: path.join(config.root, config.paths.src),
   entry: inputPaths,
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'), // Set output directory to public
+    path: path.join(__dirname, 'public'), // or "dist" if you configure Vercel for it
+    filename: 'build/[name].[contenthash].js',
+    publicPath: '/', // Serves files relative to the domain root
   },
   mode: ['production', 'development'].includes(config.env) ? config.env : 'development',
   devtool: config.env === 'production' ? 'hidden-source-map' : 'eval-cheap-source-map',
