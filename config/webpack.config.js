@@ -28,7 +28,7 @@ module.exports = {
   context: path.join(config.root, config.paths.src),
   entry: inputPaths,
   output: {
-    path: path.join(__dirname, 'public'), // or "dist" if you configure Vercel for it
+    path: path.join(config.root, 'public'),
     filename: 'build/[name].[contenthash].js',
     publicPath: '/', // Serves files relative to the domain root
   },
