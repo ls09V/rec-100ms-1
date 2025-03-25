@@ -1,111 +1,37 @@
 const path = require('path');
-const fs = require('fs');
-const config = require('./site.config');
-const loaders = require('./webpack.loaders');
-const plugins = require('./webpack.plugins');
-const commonFunctions = require('./commonFunctions');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const htmlFilePaths = commonFunctions.list('./src/*.html');
-
-const getIOPaths = () => {
-  const inputPaths = {};
-  htmlFilePaths.map((filePath) => {
-    const respectiveDirectory = filePath.substring(6).slice(0, -5);
-    const jsPath = path.join(config.root, config.paths.src, 'javascripts', respectiveDirectory, 'index.js');
-    const cssPath = path.join(config.root, config.paths.src, 'stylesheets', respectiveDirectory, 'style.scss');
-    const assetsPresent = [fs.existsSync(jsPath) && jsPath, fs.existsSync(cssPath) && cssPath].filter(Boolean);
-    if (assetsPresent.length) {
-      inputPaths[respectiveDirectory] = assetsPresent;
-    }
-  });
-  return inputPaths;
-};
-
-const inputPaths = getIOPaths();
-
-const ASSET_PATH = '/';
 module.exports = {
-  context: path.join(config.root, config.paths.src),
-  entry: inputPaths,
+  mode: 'production', // Ensure production build
+  entry: './src/javascript/index/index.js',
   output: {
-    path: path.join(__dirname, 'public'), // or "dist" if you configure Vercel for it
-    filename: 'build/[name].[contenthash].js',
-    publicPath: '/', // Serves files relative to the domain root
-  },
-  mode: ['production', 'development'].includes(config.env) ? config.env : 'development',
-  devtool: config.env === 'production' ? 'hidden-source-map' : 'eval-cheap-source-map',
-  devServer: {
-    static: {
-      directory: path.join(config.root, config.paths.src),
-    },
-    client: {
-      overlay: false,
-      logging: 'error',
-    },
-    watchFiles: ['src/**/*'],
-    hot: true,
-    open: true,
-    port: config.port,
-    host: config.dev_host,
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/classes$/, to: '/classes.html' },
-        { from: /^\/class$/, to: '/class.html' },
-        { from: /^\/status$/, to: '/status.html' },
-        { from: /^\/index$/, to: '/index.html' },
-        { from: /^\/zen-class-admin$/, to: '/zen-class-admin.html' },
-        { from: /^\/integration$/, to: '/integration.html' },
-        { from: /^\/meet-dashboard-new$/, to: '/meet-dashboard-new.html' },
-        { from: /^\/meet-video$/, to: '/meet-video.html' },
-        { from: /^\/status$/, to: '/status.html' },
-        { from: /^\/open-integration$/, to: '/open-integration.html' },
-        { from: /^\/forgot-password$/, to: '/forgot-password.html' },
-      ],
-    },
-  },
-  resolve: {
-    extensions: ['.js', '.html', '.mjs'],
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    clean: true, // Cleans dist folder before new build
   },
   module: {
     rules: [
-      ...loaders,
       {
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: 'javascript/auto',
+        test: /\.js$/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: [
-              ['@babel/preset-env', {
-                useBuiltIns: 'entry',
-                corejs: 3,
-              }],
-            ],
-            plugins: [
-              ['@babel/plugin-transform-runtime', {
-                regenerator: true,
-              }],
-            ],
-          },
         },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
-  plugins,
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      name: false, // Can be false, a string, or a function in webpack 5
-      maxInitialRequests: 25,
-      maxAsyncRequests: 25,
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+    }),
+  ],
+  devServer: {
+    static: './dist',
+    port: 3000,
   },
 };
